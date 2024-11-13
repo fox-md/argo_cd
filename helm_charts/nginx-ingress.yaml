@@ -13,9 +13,9 @@ spec:
 #    jsonPointers:
 #    - /spec/ports/[]/nodePort
   syncPolicy:
-    automated:
-      prune: false
-      selfHeal: false
+    automated: {}
+      # prune: false
+      # selfHeal: false
     syncOptions:
       - RespectIgnoreDifferences=true
   destination:
