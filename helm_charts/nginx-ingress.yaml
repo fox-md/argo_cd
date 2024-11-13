@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+spec:
+  project: default
+  ignoreDifferences:
+  - group: '*'
+    kind: Service
+    jqPathExpressions:
+      - '.spec.ports[]?.nodePort'
+#    jsonPointers:
+#    - /spec/ports/[]/nodePort
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - RespectIgnoreDifferences=true
+  destination:
+    namespace: ingress
+    name: in-cluster
+  source:
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    targetRevision: "1.11.3"
+    chart: ingress-nginx
+    helm:
+      values: |
+        controller:
+          admissionWebhooks:
+            patch:
+              tolerations:
+              - effect: NoSchedule
+                key: node-role.kubernetes.io/control-plane
+                operator: Exists
+          tolerations:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/control-plane
+            operator: Exists
