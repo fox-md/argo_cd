@@ -1,0 +1,41 @@
+global:
+  enabled: true
+  tlsDisable: true
+server:
+  auditStorage:
+    enabled: false
+  dataStorage:
+    enabled: false
+  extraEnvironmentVars:
+    VAULT_CACERT: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    VAULT_SKIP_VERIFY: "false"
+  extraSecretEnvironmentVars:
+  - envName: AWS_ACCESS_KEY_ID
+    secretKey: id
+    secretName: aws-credentials
+  - envName: AWS_SECRET_ACCESS_KEY
+    secretKey: key
+    secretName: aws-credentials
+  standalone:
+    config: |
+      ui = true
+
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+      }
+
+      storage "s3" {
+        bucket     = "vault.gumeniuc.me"
+        region     = "eu-central-1"
+      }
+
+      seal "awskms" {
+        region = "eu-central-1"
+        kms_key_id = "c8787b80-b846-46a4-aea7-21323b2fdd65"
+      }
+    enabled: true
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+    operator: Exists
