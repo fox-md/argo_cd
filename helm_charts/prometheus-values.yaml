@@ -1,0 +1,53 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations: {}
+    #   kubernetes.io/ingress.class: nginx
+    #   kubernetes.io/tls-acme: 'true'
+    extraLabels: {}
+    hosts:
+      - prom.gumeniuc.me
+    path: /
+    pathType: Prefix
+    extraPaths: []
+    tls: []
+
+  persistentVolume:
+    enabled: true
+    statefulSetNameOverride: ""
+    accessModes:
+      - ReadWriteOnce
+    labels: {}
+    annotations: {}
+    existingClaim: ""
+    mountPath: /data
+    size: 8Gi
+    subPath: ""
+  emptyDir:
+    sizeLimit: ""
+
+alertmanager:
+  enabled: false
+  persistence:
+    size: 2Gi
+  podSecurityContext:
+    runAsUser: 65534
+    runAsNonRoot: true
+    runAsGroup: 65534
+    fsGroup: 65534
+
+kube-state-metrics:
+  enabled: false
+
+prometheus-node-exporter:
+  enabled: false
+  rbac:
+    pspEnabled: false
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+
+prometheus-pushgateway:
+  enabled: false
+  serviceAnnotations:
+    prometheus.io/probe: pushgateway
