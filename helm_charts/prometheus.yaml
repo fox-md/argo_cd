@@ -27,4 +27,4 @@ spec:
     chart: prometheus
     helm:
       valueFiles:
-        - prometheus-values.yaml
+        - https://raw.githubusercontent.com/fox-md/argo_cd/refs/heads/master/helm_charts/prometheus-values.yaml
