@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  project: default
+  ignoreDifferences:
+  - group: '*'
+    kind: Service
+    jqPathExpressions:
+      - '.spec.ports[]?.nodePort'
+#    jsonPointers:
+#    - /spec/ports/[]/nodePort
+  syncPolicy:
+    # automated:
+      # prune: false
+      # selfHeal: false
+    syncOptions:
+      - RespectIgnoreDifferences=true
+  destination:
+    namespace: vault
+    name: in-cluster
+  source:
+    repoURL: https://helm.releases.hashicorp.com
+    targetRevision: "0.22.0"
+    chart: vault
+    helm:
+      valueFiles:
+        - https://raw.githubusercontent.com/fox-md/argo_cd/refs/heads/master/helm_charts/vault-values.yaml
