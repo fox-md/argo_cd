@@ -7,6 +7,10 @@ spec:
   project: default
   ignoreDifferences:
   - group: '*'
+    kind: MutatingWebhookConfiguration
+    jqPathExpressions:
+      - '.webhooks[]?.clientConfig.caBundle'
+  - group: '*'
     kind: Service
     jqPathExpressions:
       - '.spec.ports[]?.nodePort'
