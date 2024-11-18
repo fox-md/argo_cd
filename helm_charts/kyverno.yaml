@@ -23,5 +23,5 @@ spec:
     name: in-cluster
   source:
     repoURL: https://kyverno.github.io/kyverno
-    targetRevision: "3.3.2"
+    targetRevision: "3.3.3"
     chart: kyverno
