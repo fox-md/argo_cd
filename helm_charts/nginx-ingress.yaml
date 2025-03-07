@@ -28,6 +28,8 @@ spec:
     helm:
       values: |
         controller:
+          service:
+            type: ClusterIP
           admissionWebhooks:
             patch:
               tolerations:
