@@ -16,5 +16,5 @@ spec:
     name: in-cluster
   source:
     repoURL: https://kedacore.github.io/charts
-    targetRevision: "2.13.1"
+    targetRevision: "2.19.0"
     chart: keda
