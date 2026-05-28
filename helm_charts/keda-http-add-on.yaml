@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: keda-http-add-on
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+  destination:
+    namespace: keda
+    name: in-cluster
+  source:
+    repoURL: https://kedacore.github.io/charts
+    targetRevision: "0.14.1"
+    chart: keda-add-ons-http
+    helm:
+      values: |
+        interceptor.replicas.min: 1
+        interceptor.replicas.max: 3
