@@ -18,6 +18,8 @@ spec:
       # selfHeal: false
     syncOptions:
       - RespectIgnoreDifferences=true
+      - CreateNamespace=true
+      - ServerSideApply=true
   destination:
     namespace: metrics
     name: in-cluster
