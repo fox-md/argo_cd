@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+      enabled: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+  destination:
+    namespace: cert-manager
+    name: in-cluster
+  source:
+    repoURL: quay.io/jetstack/charts
+    targetRevision: "1.20.2"
+    chart: cert-manager
+    helm:
+      parameters:
+      - name: "crds.enabled"
+        value: true
