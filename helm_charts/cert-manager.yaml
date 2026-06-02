@@ -24,4 +24,6 @@ spec:
     helm:
       parameters:
       - name: "crds.enabled"
-        value: true
+        value: "true"
+      - name: "config.enableGatewayAPI"
+        value: "true"
