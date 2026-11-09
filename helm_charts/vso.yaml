@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vso
+  namespace: argocd
+spec:
+  project: default
+  ignoreDifferences:
+  - group: '*'
+    kind: MutatingWebhookConfiguration
+    jqPathExpressions:
+      - '.webhooks[]?.clientConfig.caBundle'
+  - group: '*'
+    kind: Service
+    jqPathExpressions:
+      - '.spec.ports[]?.nodePort'
+#    jsonPointers:
+#    - /spec/ports/[]/nodePort
+  syncPolicy:
+    # automated:
+      # prune: false
+      # selfHeal: false
+    syncOptions:
+      - RespectIgnoreDifferences=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+  destination:
+    namespace: vso
+    name: in-cluster
+  source:
+    repoURL: https://helm.releases.hashicorp.com
+    targetRevision: "1.6.2"
+    chart: vault-secrets-operator
+    helm:
+      parameters:
+      - name: "csi.enabled"
+        value: "true"
