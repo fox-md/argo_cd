@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-rollouts
+  namespace: argocd
+spec:
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      enabled: true
+    syncOptions:
+      - RespectIgnoreDifferences=true
+      - CreateNamespace=true
+      - ServerSideApply=true
+  destination:
+    namespace: rollouts
+    name: in-cluster
+  source:
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: "2.43.12"
+    chart: argo-rollouts
