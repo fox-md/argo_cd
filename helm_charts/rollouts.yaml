@@ -27,6 +27,8 @@ spec:
           replicas: 1
         dashboard:
           enabled: true
+        httproute:
+          enabled: true
           hostnames:
             - argorollouts.example.com
             - argorollouts
