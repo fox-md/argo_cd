@@ -19,7 +19,7 @@ spec:
     name: in-cluster
   source:
     repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: "2.43.12"
+    targetRevision: "2.43.11"
     chart: argo-rollouts
     helm:
       values: |
