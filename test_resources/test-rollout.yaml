@@ -11,6 +11,9 @@ metadata:
   name: argo-rollouts-http-route
   namespace: test-rollout
 spec:
+  hostnames:
+  - test-rollout
+  - test-rollout.example.com
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
@@ -72,7 +75,7 @@ spec:
         plugins:
           argoproj-labs/gatewayAPI:
             httpRoute: argo-rollouts-http-route # our created httproute
-            namespace: default # Optional: defaults to rollout namespace
+            namespace: test-rollout # Optional: defaults to rollout namespace
             # Optional: customize or disable the temporary label that marks routes as managed during a canary
             # inProgressLabelKey: rollouts.argoproj.io/gatewayapi-canary
             # inProgressLabelValue: in-progress
