@@ -21,3 +21,12 @@ spec:
     repoURL: https://argoproj.github.io/argo-helm
     targetRevision: "2.43.12"
     chart: argo-rollouts
+    helm:
+      values: |
+        controller:
+          replicas: 1
+        dashboard:
+          enabled: true
+          hostnames:
+            - argorollouts.example.com
+            - argorollouts
