@@ -37,6 +37,13 @@ apiVersion: gateway.networking.k8s.io/v1
 metadata:
   name: argo-rollouts-http-route
   namespace: test-rollout
+  annotations:
+    argocd.argoproj.io/ignore-differences: |
+      jsonPointers:
+        - /spec/rules/0/backendRefs/0/weight
+        - /spec/rules/0/backendRefs/1/weight
+      jqPathExpressions:
+        - .metadata.labels["rollouts.argoproj.io/gatewayapi-canary"]
 spec:
   hostnames:
   - test-rollout
