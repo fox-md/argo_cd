@@ -26,7 +26,7 @@ spec:
         controller:
           replicas: 1
           trafficRouterPlugins:
-            - name: name: "argoproj-labs/gatewayAPI"
+            - name: "argoproj-labs/gatewayAPI"
               location: "https://github.com/argoproj-labs/rollouts-plugin-trafficrouter-gatewayapi/releases/download/v0.17.0/gatewayapi-plugin-darwin-arm64"
         dashboard:
           enabled: true
