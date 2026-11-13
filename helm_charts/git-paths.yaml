@@ -5,7 +5,7 @@ metadata:
   name: test-resources
   namespace: argocd
 spec:
-  project: git-sources
+  project: default
   syncPolicy:
     automated:
       prune: true
