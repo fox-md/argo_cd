@@ -1,0 +1,20 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-resources
+  namespace: argocd
+spec:
+  project: git-sources
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      enabled: true
+  source:
+    repoURL: https://github.com/fox-md/argo_cd
+    path: test_resources
+    targetRevision: master
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
