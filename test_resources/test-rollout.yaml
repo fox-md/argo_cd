@@ -102,8 +102,9 @@ spec:
   replicas: 4
   strategy:
     canary:
-      canaryService: argo-rollouts-canary-service # our created canary service
-      stableService: argo-rollouts-stable-service # our created stable service
+      pingPong:
+        pingService: argo-rollouts-canary-service
+        pongService: argo-rollouts-stable-service
       trafficRouting:
         plugins:
           argoproj-labs/gatewayAPI:
