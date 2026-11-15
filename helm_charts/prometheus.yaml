@@ -16,10 +16,8 @@ spec:
       namespace: monitoring
       jqPathExpressions:
         - '.spec.rules[]?.backendRefs[]?.weight'
-      jsonPointers:
-        - /spec/rules/0/backendRefs/0/weight
-      #   - /spec/rules/[]/backendRefs/[]/kind
-      #   - /spec/rules/[]/backendRefs/[]/group
+        - '.spec.rules[]?.backendRefs[]?.kind'
+        - '.spec.rules[]?.backendRefs[]?.group'
   syncPolicy:
     # automated:
       # prune: false
