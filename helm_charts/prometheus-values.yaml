@@ -48,7 +48,7 @@ server:
       - ReadWriteOnce
     labels: {}
     annotations: {}
-    existingClaim: ""
+    existingClaim: "prom-pvc"
     mountPath: /data
     size: 8Gi
     subPath: ""
