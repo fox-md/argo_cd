@@ -10,7 +10,7 @@ spec:
       kind: Service
       jqPathExpressions:
         - '.spec.ports[]?.nodePort'
-    - group: '*'
+    - group: 'gateway.networking.k8s.io'
       kind: HTTPRoute
       name: prometheus-server
       namespace: monitoring
