@@ -10,12 +10,10 @@ spec:
       kind: Service
       jqPathExpressions:
         - '.spec.ports[]?.nodePort'
-  #    jsonPointers:
-  #    - /spec/ports/[]/nodePort
     - group: 'gateway.networking.k8s.io/v1'
       kind: HTTPRoute
-      name: prometheus-server
-      namespace: monitoring
+      name: '*'
+      namespace: '*'
       jqPathExpressions:
         - '.spec.rules[]?.backendRefs[]?.weight'
       jsonPointers:
