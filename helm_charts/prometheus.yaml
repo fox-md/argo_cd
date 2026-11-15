@@ -28,5 +28,87 @@ spec:
     targetRevision: "29.47.2"
     chart: prometheus
     helm:
-      valueFiles:
-        - https://raw.githubusercontent.com/fox-md/argo_cd/refs/heads/master/helm_charts/prometheus-values.yaml
+      # valueFiles:
+      #   - https://raw.githubusercontent.com/fox-md/argo_cd/refs/heads/master/helm_charts/prometheus-values.yaml
+      values: |
+        server:
+          route:
+            main:
+              ## Enable this route
+              enabled: true
+
+              ## ApiVersion set by default to "gateway.networking.k8s.io/v1"
+              apiVersion: "gateway.networking.k8s.io/v1"
+              ## kind set by default to HTTPRoute
+              kind: "HTTPRoute"
+
+              ## Annotations to attach to the HTTPRoute resource
+              annotations: {}
+              ## Labels to attach to the HTTPRoute resource
+              labels: {}
+
+              ## ParentRefs refers to resources this HTTPRoute is to be attached to (Gateways)
+              parentRefs:
+                - group: gateway.networking.k8s.io
+                  kind: Gateway
+                  name: eg
+                  namespace: envoy-gateway-system
+
+              ## Hostnames (templated) defines a set of hostnames that should match against the HTTP Host
+              ## header to select a HTTPRoute used to process the request
+              hostnames:
+                - prom.example.com
+                - prom
+
+              ## additionalRules (templated) allows adding custom rules to the route
+              additionalRules: []
+
+              ## Filters define the filters that are applied to requests that match
+              ## this rule
+              filters: []
+
+              ## Matches define conditions used for matching the rule against incoming
+              ## HTTP requests
+              matches:
+                - path:
+                    type: PathPrefix
+                    value: /
+
+          persistentVolume:
+            enabled: true
+            statefulSetNameOverride: ""
+            accessModes:
+              - ReadWriteOnce
+            labels: {}
+            annotations: {}
+            existingClaim: "prom-pvc"
+            mountPath: /data
+            size: 8Gi
+            subPath: ""
+          emptyDir:
+            sizeLimit: ""
+
+        alertmanager:
+          enabled: false
+          persistence:
+            size: 2Gi
+          podSecurityContext:
+            runAsUser: 65534
+            runAsNonRoot: true
+            runAsGroup: 65534
+            fsGroup: 65534
+
+        kube-state-metrics:
+          enabled: false
+
+        prometheus-node-exporter:
+          enabled: false
+          rbac:
+            pspEnabled: false
+          containerSecurityContext:
+            allowPrivilegeEscalation: false
+
+        prometheus-pushgateway:
+          enabled: false
+          serviceAnnotations:
+            prometheus.io/probe: pushgateway
