@@ -13,15 +13,3 @@ spec:
   hostPath:
     path: /opt/k8s-data
     type: DirectoryOrCreate
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: prom-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: manual
-  resources:
-    requests:
-      storage: 8Gi
