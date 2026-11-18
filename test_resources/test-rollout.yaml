@@ -105,6 +105,9 @@ spec:
       pingPong:
         pingService: argo-rollouts-canary-service
         pongService: argo-rollouts-stable-service
+      analysis:
+        templates:
+          - templateName: success-rate-test
       trafficRouting:
         plugins:
           argoproj-labs/gatewayAPI:
@@ -116,9 +119,8 @@ spec:
             # disableInProgressLabel: false
       steps:
       - setWeight: 50
-      - pause: {}
-      - setWeight: 75
-      - pause: {}
+      - pause:
+          duration: 10m
       - setWeight: 100
       - pause: {}
   revisionHistoryLimit: 10
@@ -132,7 +134,7 @@ spec:
     spec:
       containers:
         - name: rollouts-demo
-          image: argoproj/rollouts-demo:red
+          image: argoproj/rollouts-demo:blue
           ports:
             - name: http
               containerPort: 8080
