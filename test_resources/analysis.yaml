@@ -4,8 +4,6 @@ metadata:
   name: success-rate-test
   namespace: test-rollout
 spec:
-  args:
-  - name: service-name-test
   metrics:
   - name: success-rate
     interval: 5m
