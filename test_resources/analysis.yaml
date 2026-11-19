@@ -6,7 +6,7 @@ metadata:
 spec:
   metrics:
   - name: success-rate
-    interval: 5m
+    interval: 3m
     # NOTE: prometheus queries return results in the form of a vector.
     # So it is common to access the index 0 of the returned array to obtain the value
     successCondition: result[0] >= 0.95
@@ -18,8 +18,8 @@ spec:
         timeout: 40
         query: |
           sum(irate(
-            envoy_cluster_external_upstream_rq{envoy_cluster_name="httproute/test-rollout/argo-rollouts-http-route/rule/0",envoy_response_code="200"}[5m]
+            envoy_cluster_external_upstream_rq{envoy_cluster_name="httproute/test-rollout/argo-rollouts-http-route/rule/0",envoy_response_code="200"}[3m]
           )) /
           sum(irate(
-            envoy_cluster_external_upstream_rq{envoy_cluster_name="httproute/test-rollout/argo-rollouts-http-route/rule/0"}[5m]
+            envoy_cluster_external_upstream_rq{envoy_cluster_name="httproute/test-rollout/argo-rollouts-http-route/rule/0"}[3m]
           ))
